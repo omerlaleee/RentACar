@@ -17,18 +17,25 @@ namespace Business.Concrete
         {
             _carDal = carDal;
         }
+
         public void Add(Car car)
         {
-            _carDal.Add(car);
+            if (car.Description.Count() < 2)
+            {
+                Console.WriteLine("Description of the car can not be less than 2 character!");
+            }
+            else if (car.DailyPrice <= 0)
+            {
+                Console.WriteLine("Daily price of the car can not be less than 0!");
+            }
+            else
+            {
+                _carDal.Add(car);
+            }
         }
 
         public void Delete(Car car)
         {
-            if(_carDal.TotalCarValue() < 8)
-            {
-                Console.WriteLine("There is no more than 8 cars. You can not delete any car in this situation!");
-                return;
-            }
             _carDal.Delete(car);
         }
 
@@ -37,9 +44,14 @@ namespace Business.Concrete
             return _carDal.GetAll();
         }
 
-        public Car GetById(int id)
+        public List<Car> GetCarsByBrandId(int brandId)
         {
-            return _carDal.GetById(id);
+            return _carDal.GetAll(c => c.BrandId == brandId);
+        }
+
+        public List<Car> GetCarsByColorId(int colorId)
+        {
+            return _carDal.GetAll(c => c.ColorId == colorId);
         }
 
         public void Update(Car car)
