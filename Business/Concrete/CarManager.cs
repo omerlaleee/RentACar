@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace Business.Concrete
             {
                 Console.WriteLine("Description of the car can not be less than 2 character!");
             }
-            else if (car.DailyPrice <= 0)
+            else if (car.DailyPrice < 0)
             {
                 Console.WriteLine("Daily price of the car can not be less than 0!");
             }
@@ -42,6 +43,11 @@ namespace Business.Concrete
         public List<Car> GetAll()
         {
             return _carDal.GetAll();
+        }
+
+        public List<CarDetailsDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
         }
 
         public List<Car> GetCarsByBrandId(int brandId)
