@@ -26,11 +26,13 @@ Car car3 = new Car { BrandId = 6, ColorId = 6, DailyPrice = 400, ModelYear = 201
 Car car4 = new Car { BrandId = 1, ColorId = 7, DailyPrice = 150, ModelYear = 2015, Description = "Mercedes GLB 200 AMG" };
 Car car5 = new Car { BrandId = 4, ColorId = 1, DailyPrice = 170, ModelYear = 2016, Description = "Audi A3 Sedan" };
 
-// CarManagerTest(carManager);
+CarManagerTest(carManager);
+Console.WriteLine();
 
 // EntityFrameworkRepositoryBaseTest(carManager);
+Console.WriteLine();
 
-// DtoTest(carManager);
+DtoTest(carManager);
 
 static void CarManagerTest(CarManager carManager)
 {
@@ -57,21 +59,43 @@ static void CarManagerTest(CarManager carManager)
     Car car6 = new Car { BrandId = 4, ColorId = 1, DailyPrice = -10, ModelYear = 2016, Description = "Audi A3 Sedan" };
     Car car7 = new Car { BrandId = 4, ColorId = 1, DailyPrice = 350, ModelYear = 2016, Description = "A" };
 
-    carManager.Add(car6);
-    carManager.Add(car7);
+    var result1 = carManager.Add(car6);
+    if (!result1.Success)
+    {
+        Console.WriteLine(result1.Message);
+    }
+    var result2 = carManager.Add(car7);
+    if (!result2.Success)
+    {
+        Console.WriteLine(result2.Message);
+    }
 
     Console.WriteLine();
     var carsWhoseColorIdIsOne = carManager.GetCarsByColorId(1);
-    foreach (var item in carsWhoseColorIdIsOne)
+    if (carsWhoseColorIdIsOne.Success)
     {
-        Console.WriteLine(item.Description + " - Color : " + item.ColorId);
+        foreach (var item in carsWhoseColorIdIsOne.Data)
+        {
+            Console.WriteLine(item.Description + " - Color : " + item.ColorId);
+        }
+    }
+    else
+    {
+        Console.WriteLine(carsWhoseColorIdIsOne.Message);
     }
 
     Console.WriteLine();
     var carsWhoseBrandIdIsOne = carManager.GetCarsByBrandId(1);
-    foreach (var item in carsWhoseColorIdIsOne)
+    if (carsWhoseBrandIdIsOne.Success)
     {
-        Console.WriteLine(item.Description + " - Brand : " + item.ColorId);
+        foreach (var item in carsWhoseColorIdIsOne.Data)
+        {
+            Console.WriteLine(item.Description + " - Brand : " + item.ColorId);
+        }
+    }
+    else
+    {
+        Console.WriteLine(carsWhoseBrandIdIsOne.Message);
     }
 }
 
@@ -85,8 +109,15 @@ static void EntityFrameworkRepositoryBaseTest(CarManager carManager)
 static void DtoTest(CarManager carManager)
 {
     var carDetails = carManager.GetCarDetails();
-    foreach (var item in carDetails)
+    if (carDetails.Success)
     {
-        Console.WriteLine(item.CarName + " / " + item.ColorName + " / " + item.BrandName + " / " + item.DailyPrice);
+        foreach (var item in carDetails.Data)
+        {
+            Console.WriteLine(item.CarName + " / " + item.ColorName + " / " + item.BrandName + " / " + item.DailyPrice);
+        }
+    }
+    else
+    {
+        Console.WriteLine(carDetails.Message);
     }
 }
