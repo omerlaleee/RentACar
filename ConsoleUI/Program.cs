@@ -26,15 +26,32 @@ Car car3 = new Car { BrandId = 6, ColorId = 6, DailyPrice = 400, ModelYear = 201
 Car car4 = new Car { BrandId = 1, ColorId = 7, DailyPrice = 150, ModelYear = 2015, Description = "Mercedes GLB 200 AMG" };
 Car car5 = new Car { BrandId = 4, ColorId = 1, DailyPrice = 170, ModelYear = 2016, Description = "Audi A3 Sedan" };
 
-CarManagerTest(carManager);
-Console.WriteLine();
-
+// Car_Brand_Color_ManagerTest(carManager, colorManager, brandManager);
+// Console.WriteLine();
 // EntityFrameworkRepositoryBaseTest(carManager);
-Console.WriteLine();
+// Console.WriteLine();
+// DtoTest(carManager);
 
-DtoTest(carManager);
+UserManager userManager = new UserManager(new EfUserDal());
+CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+RentalManager rentalManager = new RentalManager(new EfRentalDal());
 
-static void CarManagerTest(CarManager carManager)
+User user1 = new User { FirstName = "Anıl", LastName = "Abanoz", Email = "anil@gmail.com", Password = "123456" };
+User user2 = new User { FirstName = "Eymen", LastName = "Ak", Email = "eymen@gmail.com", Password = "123456" };
+User user3 = new User { FirstName = "Abdullah", LastName = "Dereli", Email = "abdullah@gmail.com", Password = "123456" };
+
+// !!!!!!!!!!!ERROR ON DB!!!!!!!!!!
+userManager.Add(user1);
+userManager.Add(user2);
+userManager.Add(user3);
+
+//Customer customer1 = new Customer { UserId = 2, CompanyName = "Company1" };
+//Customer customer2 = new Customer { UserId = 3, CompanyName = "Company2" };
+
+//customerManager.Add(customer1);
+//customerManager.Add(customer2);
+
+static void Car_Brand_Color_ManagerTest(CarManager carManager, ColorManager colorManager, BrandManager brandManager)
 {
     //colorManager.Add(color1);
     //colorManager.Add(color2);
