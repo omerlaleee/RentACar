@@ -44,5 +44,10 @@ namespace Business.Constants
         public static string RentalDeleted = "Rental Deleted.";
         public static string RentalsListed = "Rental Listed.";
         public static string RentalUpdated = "Rental Updated.";
+        public static string CarReceived = "Car Received.";
+        public static string CarCanNotRented = "Car Is Already Rented. You Can Not Rent It Right Now!";
+        public static string CouldNotFoundAnyRentalAccordingToTheseInformations = "Could Not Found Any Rental According To These Informations!";
+        public static string RentalListedById = "Rental Was Listed By Given Id.";
+        public static string CarWasAlreadyReceived = "Car Was Already Received";
     }
 }

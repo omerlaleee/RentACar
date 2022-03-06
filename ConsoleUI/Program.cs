@@ -40,16 +40,27 @@ User user1 = new User { FirstName = "Anıl", LastName = "Abanoz", Email = "anil@
 User user2 = new User { FirstName = "Eymen", LastName = "Ak", Email = "eymen@gmail.com", Password = "123456" };
 User user3 = new User { FirstName = "Abdullah", LastName = "Dereli", Email = "abdullah@gmail.com", Password = "123456" };
 
-// !!!!!!!!!!!ERROR ON DB!!!!!!!!!!
-userManager.Add(user1);
-userManager.Add(user2);
-userManager.Add(user3);
+//userManager.Add(user1);
+//userManager.Add(user2);
+//userManager.Add(user3);
 
-//Customer customer1 = new Customer { UserId = 2, CompanyName = "Company1" };
-//Customer customer2 = new Customer { UserId = 3, CompanyName = "Company2" };
+Customer customer1 = new Customer { UserId = 4, CompanyName = "Company1" };
+Customer customer2 = new Customer { UserId = 5, CompanyName = "Company2" };
 
 //customerManager.Add(customer1);
 //customerManager.Add(customer2);
+
+Rental rental1 = new Rental { CarId = 1, CustomerId = 3 };
+Rental rental2 = new Rental { CarId = 3, CustomerId = 4 };
+
+//var result1 = rentalManager.Add(rental1);
+//Console.WriteLine(result1.Message);
+//var result2 = rentalManager.Add(rental2);
+//Console.WriteLine(result2.Message);
+
+var result3 = rentalManager.ReceiveCar(rentalManager.GetById(8).Data);
+Console.WriteLine(result3.Message);
+
 
 static void Car_Brand_Color_ManagerTest(CarManager carManager, ColorManager colorManager, BrandManager brandManager)
 {
