@@ -43,3 +43,5 @@ foreach (var item in carManager.GetAll())
 Console.WriteLine("-----------------------------------");
 
 Console.WriteLine("DailyPrice of the 6th Car : " + carManager.GetById(6).DailyPrice);
+
+// 11.08.2022 - 22:22
