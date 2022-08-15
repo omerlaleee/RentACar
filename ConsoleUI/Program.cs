@@ -13,6 +13,8 @@ foreach (var item in carManager.GetCarDetails())
 {
     Console.WriteLine(item.BrandName + " / " + item.CarName + " / " + item.ColorName + " / " + item.DailyPrice);
 }
+// merged
+
 
 //// 15.08.2022 - 23:40
 
