@@ -7,7 +7,7 @@ CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
 
-//// 15.08.2022 - 17:33
+//// 15.08.2022 - 17:33 MERGED
 
 //brandManager.Add(new Brand { BrandName = "Volvo" });
 //colorManager.Add(new Color { ColorName = "Black" });
