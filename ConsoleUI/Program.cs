@@ -3,12 +3,9 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemoryDal;
 using Entities.Concrete;
 
-
 CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
-
-
 
 //// 15.08.2022 - 17:33
 
@@ -40,7 +37,7 @@ Console.WriteLine("------------------");
 
 //// 15.08.2022 - 17:33
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //// 11.08.2022 - 22:22
 
