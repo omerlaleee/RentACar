@@ -7,6 +7,17 @@ CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
 
+//// 15.08.2022 - 23:40
+
+foreach (var item in carManager.GetCarDetails())
+{
+    Console.WriteLine(item.BrandName + " / " + item.CarName + " / " + item.ColorName + " / " + item.DailyPrice);
+}
+
+//// 15.08.2022 - 23:40
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //// 15.08.2022 - 17:33
 
 //brandManager.Add(new Brand { BrandName = "Volvo" });
@@ -19,21 +30,24 @@ ColorManager colorManager = new ColorManager(new EfColorDal());
 //carManager.Add(new Car { CarName = "C180", BrandId = 2, ColorId = 1, DailyPrice = 300, Description = "No Accident", ModelYear = 2013 });
 //carManager.Add(new Car { CarName = "C200", BrandId = 2, ColorId = 2, DailyPrice = 150, Description = "No Accident", ModelYear = 2011 });
 
-foreach (var item in carManager.GetAll())
-{
-    Console.WriteLine(item.CarName + " / Brand Id : " + item.BrandId + " / Color Id : " + item.ColorId);
-}
-Console.WriteLine("------------------");
-foreach (var item in carManager.GetCarsByBrandId(1))
-{
-    Console.WriteLine(item.CarName + " / Brand Id : " + item.BrandId);
-}
-Console.WriteLine("------------------"); 
-foreach (var item in carManager.GetCarsByColorId(2))
-{
-    Console.WriteLine(item.CarName + " / Color Id : " + item.ColorId);
-}
-Console.WriteLine("------------------");
+//foreach (var item in carManager.GetAll())
+//{
+//    Console.WriteLine(item.CarName + " / Brand Id : " + item.BrandId + " / Color Id : " + item.ColorId);
+//}
+//Console.WriteLine("------------------");
+//foreach (var item in carManager.GetCarsByBrandId(1))
+//{
+//    Console.WriteLine(item.CarName + " / Brand Id : " + item.BrandId);
+//}
+//Console.WriteLine("------------------"); 
+//foreach (var item in carManager.GetCarsByColorId(2))
+//{
+//    Console.WriteLine(item.CarName + " / Color Id : " + item.ColorId);
+//}
+//Console.WriteLine("------------------");
+
+//carManager.Add(new Car { CarName = "BBB", BrandId = 1, ColorId = 2, DailyPrice = 0, Description = "No Accident", ModelYear = 2010 });
+
 
 //// 15.08.2022 - 17:33
 
