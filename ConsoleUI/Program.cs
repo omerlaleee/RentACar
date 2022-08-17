@@ -16,6 +16,8 @@ RentalMenager rentalMenager = new RentalMenager(new EfRentalDal());
 //{
 //    Console.WriteLine(item.RentDate);
 //}
-var result = rentalMenager.Deliver(new Rental { RentalId = 4 });
+var result = rentalMenager.Deliver(new Rental { RentalId = 7 });
 
 Console.WriteLine(result.Message);
+
+// Deliver function is not working

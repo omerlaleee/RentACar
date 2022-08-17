@@ -34,6 +34,11 @@ namespace Business.Concrete
 
         public IResult Deliver(Rental rental)
         {
+            var rentalHistory = GetById(rental.RentalId);
+            if (rentalHistory.Data.ReturnDate != null)
+            {
+                return new ErrorResult(Messages.RentalWasAlreadyDelivered);
+            }
             _rentalDal.Deliver(rental);
             return new SuccessResult(Messages.RentalWasDelivered);
         }
@@ -41,6 +46,11 @@ namespace Business.Concrete
         public IDataResult<List<Rental>> GetAll()
         {
             return new SuccessDataResult<List<Rental>>(Messages.RentalsListed, _rentalDal.GetAll());
+        }
+
+        public IDataResult<Rental> GetById(int rentalId)
+        {
+            return new SuccessDataResult<Rental>(Messages.TheRentalListed, _rentalDal.Get(r => r.RentalId == rentalId));
         }
 
         public IDataResult<List<Rental>> GetRentalsByCarId(int carId)

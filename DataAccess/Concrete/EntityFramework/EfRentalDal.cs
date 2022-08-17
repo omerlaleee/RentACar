@@ -15,7 +15,9 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (DatabaseContext context = new())
             {
-                context.Rentals.FirstOrDefault(r => r.RentalId == rental.RentalId).ReturnDate = DateTime.Now;
+                var rentalToBeDelivered = context.Set<Rental>().SingleOrDefault(r => r.RentalId == rental.RentalId);
+                rentalToBeDelivered.ReturnDate = DateTime.Now;
+                context.SaveChanges();
             }
         }
     }

@@ -28,8 +28,9 @@ namespace Business.Constants
 
         public static string RentalAdded = "Rental Was Added";
         public static string RentalsListed = "Rentals Were Listed";
-        internal static string TheRentalListed = "The Rental Was Listed";
+        public static string TheRentalListed = "The Rental Was Listed";
         public static string CarIsInAlreadyRental = "Car Is In Already Rental";
-        internal static string RentalWasDelivered = "Rental Was Delivered";
+        public static string RentalWasDelivered = "Rental Was Delivered";
+        public static string RentalWasAlreadyDelivered = "Rental Was Already Delivered";
     }
 }
