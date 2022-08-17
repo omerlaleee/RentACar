@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Business.Concrete;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IBrandService
+    public interface ICustomerService
     {
-        IResult Add(Brand brand);
+        IResult Add(Customer customer);
+        IDataResult<List<Customer>> GetAll();
     }
 }
