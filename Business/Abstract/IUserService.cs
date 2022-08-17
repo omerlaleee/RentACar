@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Business.Abstract
 {
-    public interface IBrandService
+    public interface IUserService
     {
-        IResult Add(Brand brand);
+        IResult Add(User user);
+        IDataResult<List<User>> GetAll();
     }
 }
