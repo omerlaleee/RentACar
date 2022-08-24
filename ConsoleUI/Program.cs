@@ -8,7 +8,7 @@ BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
 UserManager userManager = new UserManager(new EfUserDal());
 CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-RentalMenager rentalMenager = new RentalMenager(new EfRentalDal());
+RentalManager rentalMenager = new RentalManager(new EfRentalDal());
 
 //var result = rentalMenager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = DateTime.Now, ReturnDate = null });
 //var result = rentalMenager.GetAll();
