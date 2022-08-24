@@ -23,5 +23,27 @@ namespace Business.Concrete
             _colorDal.Add(color);
             return new SuccessResult(Messages.ColorAdded);
         }
+
+        public IResult Delete(Color color)
+        {
+            _colorDal.Delete(color);
+            return new SuccessResult(Messages.ColorDeleted);
+        }
+
+        public IDataResult<List<Color>> GetAll()
+        {
+            return new SuccessDataResult<List<Color>>(Messages.ColorsListed, _colorDal.GetAll());
+        }
+
+        public IDataResult<Color> GetById(int colorId)
+        {
+            return new SuccessDataResult<Color>(Messages.TheColorListed, _colorDal.Get(c => c.ColorId == colorId));
+        }
+
+        public IResult Update(Color color)
+        {
+            _colorDal.Update(color);
+            return new SuccessResult(Messages.ColorUpdated);
+        }
     }
 }

@@ -42,6 +42,10 @@ namespace Business.Concrete
 
         public IDataResult<List<Car>> GetAll()
         {
+            //if (DateTime.Now.Hour == 2)
+            //{
+            //    return new ErrorDataResult<List<Car>>("Maintenance Time");
+            //}
             return new SuccessDataResult<List<Car>>(Messages.CarsListed, _carDal.GetAll());
         }
 
