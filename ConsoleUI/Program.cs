@@ -3,6 +3,7 @@ using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemoryDal;
 using Entities.Concrete;
 
+
 CarManager carManager = new CarManager(new EfCarDal());
 BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
