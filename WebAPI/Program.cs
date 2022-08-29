@@ -1,5 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
+using Business.DependencyResolvers.Autofac;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 
@@ -9,27 +12,39 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-// IoC Containers
+// IoC Containers of the .NET6
 
-builder.Services.AddScoped<ICarService, CarManager>();
-builder.Services.AddScoped<ICarDal, EfCarDal>();
+// These resolvers were moved to the Business/DependencyResolvers/Autofac/AutofacBusinessModule.cs
+// because of the Autofac software was wanted to use by us.
 
-builder.Services.AddScoped<IColorService, ColorManager>();
-builder.Services.AddScoped<IColorDal, EfColorDal>();
+//builder.Services.AddScoped<ICarService, CarManager>();
+//builder.Services.AddScoped<ICarDal, EfCarDal>();
 
-builder.Services.AddScoped<IBrandService, BrandManager>();
-builder.Services.AddScoped<IBrandDal, EfBrandDal>();
+//builder.Services.AddScoped<IColorService, ColorManager>();
+//builder.Services.AddScoped<IColorDal, EfColorDal>();
 
-builder.Services.AddScoped<IUserService, UserManager>();
-builder.Services.AddScoped<IUserDal, EfUserDal>();
+//builder.Services.AddScoped<IBrandService, BrandManager>();
+//builder.Services.AddScoped<IBrandDal, EfBrandDal>();
 
-builder.Services.AddScoped<ICustomerService, CustomerManager>();
-builder.Services.AddScoped<ICustomerDal, EfCustomerDal>();
+//builder.Services.AddScoped<IUserService, UserManager>();
+//builder.Services.AddScoped<IUserDal, EfUserDal>();
 
-builder.Services.AddScoped<IRentalService, RentalManager>();
-builder.Services.AddScoped<IRentalDal, EfRentalDal>();
+//builder.Services.AddScoped<ICustomerService, CustomerManager>();
+//builder.Services.AddScoped<ICustomerDal, EfCustomerDal>();
 
-// IoC Containers
+//builder.Services.AddScoped<IRentalService, RentalManager>();
+//builder.Services.AddScoped<IRentalDal, EfRentalDal>();
+
+// IoC Containers of the .NET6
+
+////////////////////////////////////////////////////////////////////////
+
+// IoC Containers of the Autofac
+
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.ConfigureContainer<ContainerBuilder>(builder => builder.RegisterModule(new AutofacBusinessModule()));
+
+// IoC Containers of the Autofac
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
