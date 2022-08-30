@@ -20,3 +20,5 @@ RentalManager rentalMenager = new RentalManager(new EfRentalDal());
 var result = rentalMenager.Deliver(new Rental { RentalId = 7 });
 
 Console.WriteLine(result.Message);
+
+// 30/08/22 - 16:32 * Merged
