@@ -9,7 +9,7 @@ BrandManager brandManager = new BrandManager(new EfBrandDal());
 ColorManager colorManager = new ColorManager(new EfColorDal());
 UserManager userManager = new UserManager(new EfUserDal());
 CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
-RentalManager rentalMenager = new RentalManager(new EfRentalDal());
+RentalManager rentalMenager = new RentalManager(new EfRentalDal(), new CarManager(new EfCarDal()), new CustomerManager(new EfCustomerDal()));
 
 //var result = rentalMenager.Add(new Rental { CarId = 1, CustomerId = 1, RentDate = DateTime.Now, ReturnDate = null });
 //var result = rentalMenager.GetAll();
@@ -20,5 +20,3 @@ RentalManager rentalMenager = new RentalManager(new EfRentalDal());
 var result = rentalMenager.Deliver(new Rental { RentalId = 7 });
 
 Console.WriteLine(result.Message);
-
-// 30/08/22 - 16:32 * Merged

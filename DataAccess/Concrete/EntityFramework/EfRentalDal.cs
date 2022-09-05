@@ -17,7 +17,7 @@ namespace DataAccess.Concrete.EntityFramework
             using (DatabaseContext context = new())
             {
                 var rentalToBeDelivered = context.Set<Rental>().SingleOrDefault(r => r.RentalId == rental.RentalId);
-                rentalToBeDelivered.ReturnDate = DateTime.Now;
+                rentalToBeDelivered.IsRentalCompleted = true;
                 context.SaveChanges();
             }
         }
@@ -46,7 +46,8 @@ namespace DataAccess.Concrete.EntityFramework
                                  CustomerPassword = user.Password,
                                  CustomerCompanyName = customer.CompanyName,
                                  RentDate = rental.RentDate,
-                                 ReturnDate = rental.ReturnDate
+                                 ReturnDate = rental.ReturnDate,
+                                 IsRentalCompleted = rental.IsRentalCompleted
                              };
                 return result.ToList();
             }

@@ -15,6 +15,7 @@ namespace Business.Constants
         public static string CarUpdated = "Car Was Updated";
         public static string CarNameInvalid = "Car Name Is Invalid";
         public static string DailyPriceInvalid = "Daily Price Is Invalid";
+        public static string TheCarDoesNotExist = "The Car Does Not Exist!";
 
         public static string BrandAdded = "Brand Was Added";
         public static string BrandDeleted = "Brand Was Deleted";
@@ -39,15 +40,16 @@ namespace Business.Constants
         public static string CustomersListed = "Customers Were Listed";
         public static string TheCustomerListed = "The Customer Was Listed";
         public static string CustomerUpdated = "Customer Was Updated";
+        public static string TheCustomerDoesNotExist = "The Customer Does Not Exist!";
 
         public static string RentalAdded = "Rental Was Added";
         public static string RentalDeleted = "Rental Was Deleted";
         public static string RentalsListed = "Rentals Were Listed";
         public static string TheRentalListed = "The Rental Was Listed";
         public static string RentalUpdated = "Rental Was Updated";
-        public static string CarIsInAlreadyRental = "Car Is In Already Rental";
+        public static string CarIsInAlreadyRental = "Car Is In Already Rental. You Can Not Rental This Car Again!";
         public static string RentalWasDelivered = "Rental Was Delivered";
-        public static string RentalWasAlreadyDelivered = "Rental Was Already Delivered";
-
+        public static string RentalHasAlreadyDelivered = "Rental Has Already Delivered";
+        public static string ThereIsNoRentalWhichHasTheGivenId = "There Is No Rental Which Has The Given Rental Id";
     }
 }

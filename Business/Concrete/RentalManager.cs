@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -15,20 +18,26 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
-        public RentalManager(IRentalDal rentalDal)
+        ICarService _carService;
+        ICustomerService _customerService;
+        public RentalManager(IRentalDal rentalDal, ICarService carService, ICustomerService customerService)
         {
             _rentalDal = rentalDal;
+            _carService = carService;
+            _customerService = customerService;
         }
+
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Add(Rental rental)
         {
-            rental.RentDate = DateTime.Now;
-            var rentalHistory = GetRentalsByCarId(rental.CarId);
-            foreach (var item in rentalHistory.Data)
+            rental.IsRentalCompleted = false;
+            BusinessRules.Run(IsCarIdValid(rental.CarId));
+            var ruleResult = BusinessRules.Run(IsTheCarWhichBeWantedToRentalAvailable(rental.RentalId),
+                IsCarIdValid(rental.CarId), IsCustomerIdValid(rental.CustomerId));
+
+            if (ruleResult != null)
             {
-                if (item.ReturnDate == null)
-                {
-                    return new ErrorResult(Messages.CarIsInAlreadyRental);
-                }
+                return new ErrorResult(ruleResult.Message);
             }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
@@ -40,12 +49,16 @@ namespace Business.Concrete
             return new SuccessResult(Messages.RentalDeleted);
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Deliver(Rental rental)
         {
-            var rentalHistory = GetById(rental.RentalId);
-            if (rentalHistory.Data.ReturnDate != null)
+            var ruleResult = BusinessRules.Run(IsThereARentalWhichHasIdThatIsGiven(rental.RentalId),
+                TheRentalHasDeliveredAlready(rental.RentalId), IsCarIdValid(rental.CarId),
+                IsCustomerIdValid(rental.CustomerId));
+
+            if (ruleResult != null)
             {
-                return new ErrorResult(Messages.RentalWasAlreadyDelivered);
+                return new ErrorResult(ruleResult.Message);
             }
             _rentalDal.Deliver(rental);
             return new SuccessResult(Messages.RentalWasDelivered);
@@ -71,11 +84,74 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Rental>>(Messages.TheRentalListed, _rentalDal.GetAll(r => r.CarId == carId));
         }
 
+        [ValidationAspect(typeof(RentalValidator))]
         public IResult Update(Rental rental)
         {
+            var ruleResult = BusinessRules.Run(IsCarIdValid(rental.CarId),
+                IsCustomerIdValid(rental.CustomerId));
+
+            if (ruleResult != null)
+            {
+                return new ErrorResult(ruleResult.Message);
+            }
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.RentalUpdated);
         }
+
+        // Business Rules
+        private IResult IsTheCarWhichBeWantedToRentalAvailable(int carId)
+        {
+            var rentalHistory = GetRentalsByCarId(carId);
+            foreach (var item in rentalHistory.Data)
+            {
+                if (item.IsRentalCompleted)
+                {
+                    return new ErrorResult(Messages.CarIsInAlreadyRental);
+                }
+            }
+            return new SuccessResult();
+        }
+
+        private IResult IsCustomerIdValid(int customerId)
+        {
+            var result = _customerService.GetById(customerId);
+            if (result.Data == null)
+            {
+                return new ErrorResult(Messages.TheCustomerDoesNotExist);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult IsCarIdValid(int carId)
+        {
+            var result = _carService.GetById(carId);
+            if (result.Data == null)
+            {
+                return new ErrorResult(Messages.TheCarDoesNotExist);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult IsThereARentalWhichHasIdThatIsGiven(int rentalId)
+        {
+            var rentalHistory = GetById(rentalId);
+            if (rentalHistory.Data == null)
+            {
+                return new ErrorResult(Messages.ThereIsNoRentalWhichHasTheGivenId);
+            }
+            return new SuccessResult();
+        }
+
+        private IResult TheRentalHasDeliveredAlready(int rentalId)
+        {
+            var rentalHistory = GetById(rentalId);
+            if (rentalHistory.Data.IsRentalCompleted == true)
+            {
+                return new ErrorResult(Messages.RentalHasAlreadyDelivered);
+            }
+            return new SuccessResult();
+        }
+
     }
 }
 
