@@ -20,7 +20,9 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
 
+        //
         // FileHelper class need to be examined!!!!!
+        //
 
         public CarImageManager(ICarImageDal carImageDal)
         {
