@@ -31,7 +31,6 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             rental.IsRentalCompleted = false;
-            BusinessRules.Run(IsCarIdValid(rental.CarId));
             var ruleResult = BusinessRules.Run(IsTheCarWhichBeWantedToRentalAvailable(rental.RentalId),
                 IsCarIdValid(rental.CarId), IsCustomerIdValid(rental.CustomerId));
 

@@ -23,6 +23,8 @@ namespace Business.Constants
         public static string TheCarImageListed = "The CarImage Was Listed";
         public static string CarImageUpdated = "CarImage Was Updated";
         public static string CarImageDoesNotFound = "The Given Car Image Does Not Found!";
+        public static string CarImageLimitExceeded = "Car Image Limit Exceeded! You Can Not Upload More Than Five For A Car.";
+        public static string TheCarImagesOfTheGivenCarListed = "The CarImages Of The Given Car Listed";
 
         public static string BrandAdded = "Brand Was Added";
         public static string BrandDeleted = "Brand Was Deleted";

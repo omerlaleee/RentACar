@@ -29,6 +29,11 @@ namespace Business.Concrete
         public IResult Add(IFormFile image, CarImage carImage)
         {
             // Business Rules
+            var ruleResult = BusinessRules.Run(CheckImageLimitExceeded(carImage.CarId));
+            if (ruleResult != null)
+            {
+                return new ErrorResult(ruleResult.Message);
+            }
 
             // Adding Image
             var imageResult = FileHelper.Add(image);
@@ -64,11 +69,23 @@ namespace Business.Concrete
             return new SuccessDataResult<CarImage>(Messages.TheCarImageListed, _carImageDal.Get(cI => cI.CarImageId == carImageId));
         }
 
+        public IDataResult<List<CarImage>> GetCarImagesByCarId(int carId)
+        {
+            var data = _carImageDal.GetAll(cI => cI.CarId == carId);
+            if (data.Count == 0)
+            {
+                data.Add(new CarImage
+                {
+                    CarId = carId,
+                    ImagePath = "C:/Users/omer_/OneDrive/Masaüstü/RentACar/WebAPI/wwwroot/Images/default.jpg"
+                });
+            }
+            return new SuccessDataResult<List<CarImage>>(Messages.TheCarImagesOfTheGivenCarListed, data);
+        }
+
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile image, CarImage carImage)
         {
-            // Business Rules
-
             // Updating Image
             var carToBeUpdated = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
             if (carToBeUpdated == null)
@@ -83,6 +100,17 @@ namespace Business.Concrete
             }
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
+        }
+
+        // Business Rules
+        private IResult CheckImageLimitExceeded(int carId)
+        {
+            var carImagesOfTheCar = _carImageDal.GetAll(p => p.CarId == carId);
+            if (carImagesOfTheCar.Count >= 5)
+            {
+                return new ErrorResult(Messages.CarImageLimitExceeded);
+            }
+            return new SuccessResult();
         }
     }
 }
