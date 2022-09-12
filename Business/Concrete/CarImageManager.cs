@@ -20,22 +20,22 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
 
-        //
-        // FileHelper class need to be examined!!!!!
-        //
-
         public CarImageManager(ICarImageDal carImageDal)
         {
             _carImageDal = carImageDal;
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Add(CarImage carImage, IFormFile formFile)
+        public IResult Add(IFormFile image, CarImage carImage)
         {
-            var ruleResult = BusinessRules.Run(FileHelper.Add(formFile));
-            if (ruleResult != null)
+            // Business Rules
+
+            // Adding Image
+            var imageResult = FileHelper.Add(image);
+            carImage.ImagePath = imageResult.Message;
+            if (!imageResult.Success)
             {
-                return new ErrorResult(ruleResult.Message);
+                return new ErrorResult(imageResult.Message);
             }
             _carImageDal.Add(carImage);
             return new SuccessResult(Messages.CarImageAdded);
@@ -43,6 +43,8 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
+            var carToBeDeleted = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            FileHelper.Delete(carToBeDeleted.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
         }
@@ -58,8 +60,14 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(CarImage carImage, IFormFile formFile)
+        public IResult Update(IFormFile image, CarImage carImage)
         {
+            var imageResult = FileHelper.Update(image, carImage.ImagePath);
+            carImage.ImagePath = imageResult.Message;
+            if (!imageResult.Success)
+            {
+                return new ErrorResult(imageResult.Message);
+            }
             _carImageDal.Update(carImage);
             return new SuccessResult(Messages.CarImageUpdated);
         }

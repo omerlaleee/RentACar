@@ -11,8 +11,8 @@ namespace Business.Abstract
 {
     public interface ICarImageService
     {
-        IResult Add(CarImage carImage, IFormFile formFile);
-        IResult Update(CarImage carImage, IFormFile formFile);
+        IResult Add(IFormFile formFile, CarImage carImage);
+        IResult Update(IFormFile formFile, CarImage carImage);
         IResult Delete(CarImage carImage);
         IDataResult<List<CarImage>> GetAll();
         IDataResult<CarImage> GetById(int carImageId);

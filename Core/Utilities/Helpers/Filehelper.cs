@@ -7,72 +7,82 @@ using System.Text;
 
 namespace Core.Utilities.Helpers
 {
-    public class FileHelper
+    public static class FileHelper
     {
         private static string _currentFileDirectory = Environment.CurrentDirectory + "\\wwwroot";
-        private static string _folderName = "\\images\\";
+        private static string _folderName = "\\Images\\";
 
+        // Adding image file to the root directory.
         public static IResult Add(IFormFile file)
         {
             var fileExist = CheckFileExists(file);
-            if (fileExist.Message != null)
+            if (!fileExist.Success)
             {
                 return new ErrorResult(fileExist.Message);
             }
 
             var type = Path.GetExtension(file.FileName);
             var typeValid = CheckFileTypeValid(type);
-            var randomName = Guid.NewGuid().ToString();
-
-            if (typeValid.Message != null)
+            if (!typeValid.Success)
             {
                 return new ErrorResult(typeValid.Message);
             }
 
-            CheckFileDirectoryExist(_currentFileDirectory + _folderName);
-            CreateImageFile(_currentFileDirectory + _folderName + randomName + type, file);
-            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
+            var randomGuid = Guid.NewGuid().ToString();
+
+            var directory = _currentFileDirectory + _folderName;
+            var fileDirectory = directory + randomGuid + type;
+
+            CheckFileDirectoryExist(directory);
+            CreateImageFile(fileDirectory, file);
+
+            // Message of the result returns the ImagePath of added image.
+            return new SuccessResult(fileDirectory.Replace("\\", "/"));
         }
 
-        public static IResult Update(string imagePath, IFormFile file)
+        // Updating image file.
+        public static IResult Update(IFormFile file, string imagePath)
         {
             var fileExist = CheckFileExists(file);
-            if (fileExist.Message != null)
+            if (!fileExist.Success)
             {
                 return new ErrorResult(fileExist.Message);
             }
 
             var type = Path.GetExtension(file.FileName);
             var typeValid = CheckFileTypeValid(type);
-            var randomName = Guid.NewGuid().ToString();
-
-            if (typeValid.Message != null)
+            if (!typeValid.Success)
             {
                 return new ErrorResult(typeValid.Message);
             }
+            var randomGuid = Guid.NewGuid().ToString();
 
-            DeleteOldImageFile((_currentFileDirectory + imagePath).Replace("/", "\\"));
+            var directory = _currentFileDirectory + _folderName;
+            var fileDirectory = directory + randomGuid + type;
+
+            DeleteOldImageFile(imagePath.Replace("/", "\\"));
             CheckFileDirectoryExist(_currentFileDirectory + _folderName);
-            CreateImageFile(_currentFileDirectory + _folderName + randomName + type, file);
+            CreateImageFile(_currentFileDirectory + _folderName + randomGuid + type, file);
 
-            return new SuccessResult((_folderName + randomName + type).Replace("\\", "/"));
+            // Message of the result returns the ImagePath of added image.
+            return new SuccessResult(fileDirectory.Replace("\\", "/"));
         }
 
+        // Deleting image file from the root directory.
         public static IResult Delete(string path)
         {
-            DeleteOldImageFile((_currentFileDirectory + path).Replace("/", "\\"));
+            DeleteOldImageFile(path.Replace("/", "\\"));
             return new SuccessResult();
         }
 
         // Verification Methods
         private static IResult CheckFileTypeValid(string type)
         {
-            if (type != ".jpeg" && type != ".png" && type != ".jpg")
+            if (type == ".jpeg" || type == ".png" || type == ".jpg")
             {
-                return new ErrorResult("File Type Is Wrong!");
+                return new SuccessResult();
             }
-
-            return new SuccessResult();
+            return new ErrorResult("File Type Is Wrong! It Has To Be ('.jpeg', '.png' or '.jpg')");
         }
 
         private static IResult CheckFileExists(IFormFile file)
@@ -81,14 +91,14 @@ namespace Core.Utilities.Helpers
             {
                 return new SuccessResult();
             }
-            return new ErrorResult("File Not Found!");
+            return new ErrorResult("File Does Not Exist!");
         }
 
         private static void DeleteOldImageFile(string directory)
         {
-            if (File.Exists(directory.Replace("/", "\\")))
+            if (File.Exists(directory))
             {
-                File.Delete(directory.Replace("/", "\\"));
+                File.Delete(directory);
             }
         }
 
