@@ -43,7 +43,12 @@ namespace Business.Concrete
 
         public IResult Delete(CarImage carImage)
         {
+            // Deleting Image
             var carToBeDeleted = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            if (carToBeDeleted == null)
+            {
+                return new ErrorResult(Messages.CarImageDoesNotFound);
+            }
             FileHelper.Delete(carToBeDeleted.ImagePath);
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
@@ -62,7 +67,15 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarImageValidator))]
         public IResult Update(IFormFile image, CarImage carImage)
         {
-            var imageResult = FileHelper.Update(image, carImage.ImagePath);
+            // Business Rules
+
+            // Updating Image
+            var carToBeUpdated = _carImageDal.Get(c => c.CarImageId == carImage.CarImageId);
+            if (carToBeUpdated == null)
+            {
+                return new ErrorResult(Messages.CarImageDoesNotFound);
+            }
+            var imageResult = FileHelper.Update(image, carToBeUpdated.ImagePath);
             carImage.ImagePath = imageResult.Message;
             if (!imageResult.Success)
             {

@@ -64,6 +64,7 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+        // http://localhost:13331/api/carimages/update
         [HttpPost("update")]
         public IActionResult Update([FromForm(Name = ("Image"))] IFormFile formFile, [FromForm] CarImage carImage)
         {

@@ -22,6 +22,7 @@ namespace Business.Constants
         public static string CarImagesListed = "CarImages Were Listed";
         public static string TheCarImageListed = "The CarImage Was Listed";
         public static string CarImageUpdated = "CarImage Was Updated";
+        public static string CarImageDoesNotFound = "The Given Car Image Does Not Found!";
 
         public static string BrandAdded = "Brand Was Added";
         public static string BrandDeleted = "Brand Was Deleted";

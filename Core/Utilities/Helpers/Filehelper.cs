@@ -61,8 +61,8 @@ namespace Core.Utilities.Helpers
             var fileDirectory = directory + randomGuid + type;
 
             DeleteOldImageFile(imagePath.Replace("/", "\\"));
-            CheckFileDirectoryExist(_currentFileDirectory + _folderName);
-            CreateImageFile(_currentFileDirectory + _folderName + randomGuid + type, file);
+            CheckFileDirectoryExist(directory);
+            CreateImageFile(fileDirectory, file);
 
             // Message of the result returns the ImagePath of added image.
             return new SuccessResult(fileDirectory.Replace("\\", "/"));
