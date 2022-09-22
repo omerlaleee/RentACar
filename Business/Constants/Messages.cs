@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,6 +44,13 @@ namespace Business.Constants
         public static string UsersListed = "Users Were Listed";
         public static string TheUserListed = "The User Was Listed";
         public static string UserUpdated = "User Was Updated";
+        public static string UserClaimsListed = "Claims of the User Was Listed";
+        public static string UserRegistered = "User Registered";
+        public static string UserNotFound = "User Not Found";
+        public static string PasswordError = "User's Password Is Wrong";
+        public static string SuccessfulLogin = "User's Login Is Successful";
+        public static string UserAlreadyExists = "User Is Already Exist";
+        public static string AccessTokenCreated = "User's Access Token Was Created";
 
         public static string CustomerAdded = "Customer Was Added";
         public static string CustomerDeleted = "Customer Was Deleted";
@@ -60,6 +68,8 @@ namespace Business.Constants
         public static string RentalWasDelivered = "Rental Was Delivered";
         public static string RentalHasAlreadyDelivered = "Rental Has Already Delivered";
         public static string ThereIsNoRentalWhichHasTheGivenId = "There Is No Rental Which Has The Given Rental Id";
+
+        public static string AuthorizationDenied = "Authorization Denied!";
 
     }
 }

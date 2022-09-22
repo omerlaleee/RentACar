@@ -43,7 +43,6 @@ namespace DataAccess.Concrete.EntityFramework
                                  CustomerFirstName = user.FirstName,
                                  CustomerLastName = user.LastName,
                                  CustomerEmail = user.Email,
-                                 CustomerPassword = user.Password,
                                  CustomerCompanyName = customer.CompanyName,
                                  RentDate = rental.RentDate,
                                  ReturnDate = rental.ReturnDate,
