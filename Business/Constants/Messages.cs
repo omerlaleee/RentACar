@@ -32,6 +32,7 @@ namespace Business.Constants
         public static string BrandsListed = "Brands Were Listed";
         public static string TheBrandListed = "The Brand Was Listed";
         public static string BrandUpdated = "Brand Was Updated";
+        public static string BrandNameAlreadyExist = "Brand Name Is Already Exist!";
 
         public static string ColorAdded = "Color Was Added";
         public static string ColorDeleted = "Color Was Deleted";
