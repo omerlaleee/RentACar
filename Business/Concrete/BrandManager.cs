@@ -3,6 +3,7 @@ using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -55,6 +56,14 @@ namespace Business.Concrete
         public IDataResult<Brand> GetById(int brandId)
         {
             return new SuccessDataResult<Brand>(Messages.TheBrandListed, _brandDal.Get(b => b.BrandId == brandId));
+        }
+
+        [TransactionScopeAspect]
+        public IResult TransactionalOperation(Brand brand)
+        {
+            _brandDal.Update(brand);
+            _brandDal.Add(brand);
+            return new SuccessResult(Messages.BrandUpdated);
         }
 
         [ValidationAspect(typeof(BrandValidator))]
