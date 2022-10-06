@@ -95,7 +95,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // CORS Configuration → If 4200th port wants to request anything, give it.
-app.UseCors(builder => builder.WithOrigins("http://localhost:57382").AllowAnyHeader());
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 // CORS Configuration 
 
 // Middlewares
