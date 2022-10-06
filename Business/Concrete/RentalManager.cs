@@ -31,13 +31,14 @@ namespace Business.Concrete
         public IResult Add(Rental rental)
         {
             rental.IsRentalCompleted = false;
-            var ruleResult = BusinessRules.Run(IsTheCarWhichBeWantedToRentalAvailable(rental.RentalId),
+            var ruleResult = BusinessRules.Run(IsTheCarWhichBeWantedToRentalAvailable(rental.CarId),
                 IsCarIdValid(rental.CarId), IsCustomerIdValid(rental.CustomerId));
 
             if (ruleResult != null)
             {
                 return new ErrorResult(ruleResult.Message);
             }
+            rental.RentDate = DateTime.Now;
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.RentalAdded);
         }
@@ -103,7 +104,7 @@ namespace Business.Concrete
             var rentalHistory = GetRentalsByCarId(carId);
             foreach (var item in rentalHistory.Data)
             {
-                if (item.IsRentalCompleted)
+                if (item.IsRentalCompleted == false)
                 {
                     return new ErrorResult(Messages.CarIsInAlreadyRental);
                 }
