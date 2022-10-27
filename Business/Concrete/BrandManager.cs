@@ -49,7 +49,6 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Brand>> GetAll()
         {
-            Thread.Sleep(5000);
             return new SuccessDataResult<List<Brand>>(Messages.BrandsListed, _brandDal.GetAll());
         }
 
