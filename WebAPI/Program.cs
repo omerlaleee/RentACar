@@ -95,11 +95,15 @@ if (app.Environment.IsDevelopment())
 }
 
 // CORS Configuration → If 4200th port wants to request anything, give it.
-app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
+app.UseCors(builder => builder.WithOrigins("http://localhost:4200", "http://localhost:44300").AllowAnyHeader());
 // CORS Configuration 
 
 // Middlewares
 app.UseHttpsRedirection();
+
+// It was used for showing images in Angular project.
+app.UseStaticFiles();
+// It was used for showing images in Angular project.
 
 // JWT Configuration
 app.UseAuthentication();

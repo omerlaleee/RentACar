@@ -58,6 +58,11 @@ namespace DataAccess.Concrete.InMemoryDal
             return _cars.SingleOrDefault(c => c.CarId == carId);
         }
 
+        public CarDetailDto GetCarDetailById(int carId)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();

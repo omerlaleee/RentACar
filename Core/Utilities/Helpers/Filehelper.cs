@@ -37,7 +37,8 @@ namespace Core.Utilities.Helpers
             CreateImageFile(fileDirectory, file);
 
             // Message of the result returns the ImagePath of added image.
-            return new SuccessResult(fileDirectory.Replace("\\", "/"));
+            var fileAddressToBeSavedOnDatabase = _folderName + randomGuid + type;
+            return new SuccessResult(fileAddressToBeSavedOnDatabase.Replace("\\", "/"));
         }
 
         // Updating image file.
@@ -65,7 +66,8 @@ namespace Core.Utilities.Helpers
             CreateImageFile(fileDirectory, file);
 
             // Message of the result returns the ImagePath of added image.
-            return new SuccessResult(fileDirectory.Replace("\\", "/"));
+            var fileAddressToBeSavedOnDatabase = _folderName + randomGuid + type;
+            return new SuccessResult(fileAddressToBeSavedOnDatabase.Replace("\\", "/"));
         }
 
         // Deleting image file from the root directory.
@@ -96,9 +98,10 @@ namespace Core.Utilities.Helpers
 
         private static void DeleteOldImageFile(string directory)
         {
-            if (File.Exists(directory))
+            var fullDirectory = Environment.CurrentDirectory + "\\wwwroot" + directory;
+            if (File.Exists(fullDirectory))
             {
-                File.Delete(directory);
+                File.Delete(fullDirectory);
             }
         }
 

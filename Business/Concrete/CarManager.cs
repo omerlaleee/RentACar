@@ -46,6 +46,11 @@ namespace Business.Concrete
             return new SuccessDataResult<Car>(Messages.TheCarListed, _carDal.Get(c => c.CarId == carId));
         }
 
+        public IDataResult<CarDetailDto> GetCarDetailById(int carId)
+        {
+            return new SuccessDataResult<CarDetailDto>(Messages.TheCarListed, _carDal.GetCarDetailById(carId));
+        }
+
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(Messages.CarsListed, _carDal.GetCarDetails());
