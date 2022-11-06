@@ -77,7 +77,7 @@ namespace Business.Concrete
                 data.Add(new CarImage
                 {
                     CarId = carId,
-                    ImagePath = "C:/Users/omer_/OneDrive/Masaüstü/RentACar/WebAPI/wwwroot/Images/default.jpg"
+                    ImagePath = "/Images/default.jpg"
                 });
             }
             return new SuccessDataResult<List<CarImage>>(Messages.TheCarImagesOfTheGivenCarListed, data);
